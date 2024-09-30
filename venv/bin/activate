@@ -38,7 +38,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/Users/omsanan/Downloads/chat-ui/venv"
+VIRTUAL_ENV="/Users/omsanan/Downloads/o1-ui-v2/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

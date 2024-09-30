@@ -27,10 +27,10 @@ def index():
 @app.route('/chat', methods=['POST'])
 def chat():
     global chat_counter
-    data = request.json
-    user_message = data['message']
+    data = request.json  # Extract JSON data from the request
     model = data['model']
     chat_id = data['chat_id']
+    user_message = data['message']  # Extract user message from the data
 
     if chat_id not in chats:
         chat_counter += 1
