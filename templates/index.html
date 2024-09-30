@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chat Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Import Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <!-- Include GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <!-- Include MathJax for rendering equations -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+</head>
+<body>
+<div class="chat-container">
+    <div class="sidebar">
+        <div class="logo">
+            <h1>Chat<span>AI</span></h1>
+        </div>
+        <div class="menu">
+            <button id="new-chat-btn"><i class="fas fa-plus"></i> New Chat</button>
+            <select id="model-select">
+                <option value="o1-mini">o1-mini</option>
+                <option value="o1-preview">o1-preview</option>
+                <option value="gpt-4o">gpt-4o</option>
+                <option value="claude-3-5-sonnet-20240620">claude-3.5</option>
+            </select>
+        </div>
+        <h3>Past Chats</h3>
+        <ul id="chat-list"></ul>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h2 id="chat-title">New Chat</h2>
+            <div class="controls">
+                <!-- Dark/Light Mode Slider -->
+                <label class="switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="slider round"></span>
+                </label>
+            </div>
+        </div>
+        <div id="chat-box"></div>
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Type your message..." autocomplete="off" required>
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+</div>
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
