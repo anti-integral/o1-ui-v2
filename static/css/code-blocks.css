@@ -1,0 +1,70 @@
+/* Code Block Styles */
+.code-block {
+    position: relative;
+    background-color: transparent; /* Let Prism.js handle the background */
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: auto;
+}
+
+body.light-theme .code-block {
+    background-color: transparent; /* Let Prism.js handle the background */
+}
+
+.code-block pre {
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+    background: none; /* Remove background to avoid conflict with Prism.js */
+    padding: 0;
+}
+
+.copy-btn,
+.run-btn {
+    position: absolute;
+    top: 10px;
+    background: none;
+    border: 1px solid #00d2ff;
+    color: #00d2ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background 0.3s, color 0.3s;
+}
+
+.copy-btn:hover,
+.run-btn:hover {
+    background-color: #00d2ff;
+    color: #ffffff;
+}
+
+.copy-btn {
+    right: 10px;
+}
+
+.run-btn {
+    left: 10px;
+}
+
+.code-block .output {
+    margin-top: 10px;
+    background-color: #000000;
+    color: #00ff00;
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.code-block .output pre {
+    margin: 0;
+    white-space: pre-wrap; /* Preserve line breaks and wrapping */
+}
+
+body.light-theme .code-block .output {
+    background-color: #f0f0f0;
+    color: #333333;
+}

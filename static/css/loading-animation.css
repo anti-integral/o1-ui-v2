@@ -1,0 +1,74 @@
+/* Enhanced Futuristic Loading Animation */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.loader {
+    width: 80px;
+    height: 80px;
+    position: relative;
+    perspective: 800px;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation: rotate-cube 4s infinite linear; /* Slowed down rotation */
+}
+
+.face {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    background: rgba(0, 210, 255, 0.1);
+    border: 2px solid var(--loader-color);
+    box-shadow: 0 0 20px var(--loader-color);
+}
+
+.face.front  { transform: translateZ(40px); }
+.face.back   { transform: rotateY(180deg) translateZ(40px); }
+.face.right  { transform: rotateY(90deg) translateZ(40px); }
+.face.left   { transform: rotateY(-90deg) translateZ(40px); }
+.face.top    { transform: rotateX(90deg) translateZ(40px); }
+.face.bottom { transform: rotateX(-90deg) translateZ(40px); }
+
+@keyframes rotate-cube {
+    0%   { transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
+    100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 768px) {
+    .loading-animation {
+        height: 60px;
+    }
+
+    .loader {
+        width: 60px;
+        height: 60px;
+    }
+
+    .face {
+        width: 60px;
+        height: 60px;
+    }
+
+    .face.front  { transform: translateZ(30px); }
+    .face.back   { transform: rotateY(180deg) translateZ(30px); }
+    .face.right  { transform: rotateY(90deg) translateZ(30px); }
+    .face.left   { transform: rotateY(-90deg) translateZ(30px); }
+    .face.top    { transform: rotateX(90deg) translateZ(30px); }
+    .face.bottom { transform: rotateX(-90deg) translateZ(30px); }
+}
+
+/* Light Theme Adjustments */
+body.light-theme .loader .face {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 20px #007bff;
+    background: rgba(0, 123, 255, 0.1);
+}

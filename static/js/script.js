@@ -47,9 +47,13 @@ document.addEventListener('DOMContentLoaded', () => {
             loadingMessage.remove();
             appendMessage('assistant', data.assistant_message);
             currentChatId = data.chat_id;
-            MathJax.typeset();  // Re-render MathJax equations
             scrollToBottom();
             loadChatList();  // Refresh chat list
+
+            // Re-render MathJax equations
+            if (typeof MathJax !== 'undefined') {
+                MathJax.typesetPromise();
+            }
         });
     });
 
@@ -93,8 +97,18 @@ document.addEventListener('DOMContentLoaded', () => {
             { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
         );
 
-        // Setup copy buttons for code blocks
+        // Setup copy buttons and run buttons for code blocks
         setupCopyButtons();
+
+        // Re-render MathJax equations in the new message
+        if (typeof MathJax !== 'undefined') {
+            MathJax.typesetPromise([messageDiv]);
+        }
+
+        // Highlight code blocks with Prism.js in the new message
+        if (typeof Prism !== 'undefined') {
+            Prism.highlightAllUnder(messageDiv);
+        }
     }
 
     function appendLoadingMessage() {
@@ -104,22 +118,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const bubbleDiv = document.createElement('div');
         bubbleDiv.classList.add('bubble');
 
-        const loadingAnimation = document.createElement('div');
-        loadingAnimation.classList.add('loading-animation');
+        const loadingAnimation = createLoadingAnimation();
 
-        const loader = document.createElement('div');
-        loader.classList.add('loader');
-
-        const cube = document.createElement('div');
-        cube.classList.add('cube');
-
-        for (let i = 0; i < 6; i++) {
-            const face = document.createElement('div');
-            cube.appendChild(face);
-        }
-
-        loader.appendChild(cube);
-        loadingAnimation.appendChild(loader);
         bubbleDiv.appendChild(loadingAnimation);
         messageDiv.appendChild(bubbleDiv);
         chatBox.appendChild(messageDiv);
@@ -138,50 +138,6 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTop: chatBox.scrollHeight,
             duration: 0.5,
             ease: "power2.out"
-        });
-    }
-
-    function formatMarkdown(content) {
-        // Add spacing before headers, but avoid extra space at the top
-        content = content.replace(/^(#{1,6})\s+(.*)$/gm, (match, hashes, headingText) => {
-            const level = hashes.length;
-            return `<h${level}>${headingText}</h${level}>`;
-        });
-
-        // Handle bold and italic: **text**
-        content = content.replace(/\*\*(.*?)\*\*/g, '<strong><em>$1</em></strong>');
-
-        // Handle code blocks with or without language specification
-        content = content.replace(/```(?:(\w+)\n)?([\s\S]*?)```/g, (match, lang, code) => {
-            const languageClass = lang ? ` language-${lang}` : '';
-            return `
-                <div class="code-block">
-                    <button class="copy-btn">Copy</button>
-                    <pre><code class="${languageClass}">${code.trim()}</code></pre>
-                </div>
-            `;
-        });
-
-        return content;
-    }
-
-    function setupCopyButtons() {
-        const copyButtons = document.querySelectorAll('.copy-btn');
-        copyButtons.forEach(button => {
-            if (!button.dataset.listenerAdded) {
-                button.dataset.listenerAdded = 'true';
-                button.onclick = () => {
-                    const codeBlock = button.nextElementSibling.querySelector('code');
-                    const codeText = codeBlock.innerText;
-                    navigator.clipboard.writeText(codeText).then(() => {
-                        // Provide feedback
-                        button.textContent = 'Copied!';
-                        setTimeout(() => {
-                            button.textContent = 'Copy';
-                        }, 2000);
-                    });
-                };
-            }
         });
     }
 
